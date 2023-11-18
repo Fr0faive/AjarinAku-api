@@ -10,9 +10,7 @@ const register = async (request) => {
 
   const countUser = await prismaClient.user.count({
     where: {
-      id: user.id,
       username: user.username,
-      email: user.email,
     },
   });
 
@@ -22,14 +20,8 @@ const register = async (request) => {
 
   user.password = await bcrypt.hash(user.password, 10);
 
-  return prismaClient.user.create({
-    data: user,
-    select: {
-      id: true,
-      username: true,
-      email: true,
-    },
-  });
+  const createUser = await prismaClient.user.create({ data: user });
+  return createUser;
 };
 
 export default { register };

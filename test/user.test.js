@@ -13,14 +13,13 @@ describe("POST /api/users", function () {
 
   it("should create a new user", async () => {
     const result = await supertest(web).post("/api/users").send({
-      id: 1,
       username: "test",
       password: "rahasia",
       email: "test@test.com",
     });
 
     expect(result.status).toBe(200);
-    expect(result.body.data.id).toBe(1);
+    expect(result.body.data.id).toBeGreaterThan(0);
     expect(result.body.data.username).toBe("test");
     expect(result.body.data.email).toBe("test@test.com");
     expect(result.body.data.password).toBeUndefined();

@@ -11,11 +11,12 @@ datasource db {
 }
 
 model User {
-  id Int @id @db.Int
+  id Int @id @default(autoincrement())
   username String @db.VarChar(100)
   password String @db.VarChar(100)
   email String @db.VarChar(100)
   token String? @db.VarChar(100)
+  roles String? @db.VarChar(10)
 
   @@map("users")
 }
