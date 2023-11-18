@@ -4,6 +4,16 @@ const registerUserValidation = Joi.object({
   username: Joi.string().max(255).required(),
   email: Joi.string().email().required(),
   password: Joi.string().required(),
+  roles: Joi.string().valid("user", "admin").default("user"),
 });
 
-export { registerUserValidation };
+const loginUserValidation = Joi.object({
+  username: Joi.string().max(255).required(),
+  password: Joi.string().required(),
+});
+
+const getUserValidation = Joi.object({
+  username: Joi.string().max(255).required(),
+});
+
+export { registerUserValidation, loginUserValidation, getUserValidation };
