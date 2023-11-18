@@ -9,4 +9,4 @@ const validation = (schema, request) => {
   }
 };
 
-export default { validation };
+export { validation };
