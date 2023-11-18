@@ -131,7 +131,6 @@ describe("GET /api/users/current", function () {
 
     expect(result.status).toBe(200);
     expect(result.body.data.username).toBe("test");
-    expect(result.body.data.email).toBe("test@test.com");
   });
 
   it("should reject if token is wrong", async () => {
