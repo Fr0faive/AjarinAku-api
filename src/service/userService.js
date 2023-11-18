@@ -4,6 +4,7 @@ import {
   loginUserValidation,
   registerUserValidation,
   getUserValidation,
+  updateUserValidation,
 } from "../validation/userValidation.js";
 // import validation from "../validation/validation.js";
 import bcrypt from "bcrypt";
@@ -92,10 +93,73 @@ const getUser = async (username) => {
   });
 
   if (!user) {
-    throw new ResponseError(404, "user is not found");
+    throw new ResponseError("user is not found", 404);
   }
 
   return user;
 };
 
-export default { register, login, getUser };
+const update = async (request) => {
+  const user = validation(updateUserValidation, request);
+
+  const totalUser = await prismaClient.user.count({
+    where: {
+      username: user.username,
+    },
+  });
+
+  if (totalUser !== 1) {
+    throw new ResponseError("user is not found", 404);
+  }
+
+  const data = {};
+  if (user.email) {
+    data.email = user.email;
+  }
+  if (user.password) {
+    data.password = await bcrypt.hash(user.password, 10);
+  }
+  if (user.roles) {
+    data.roles = user.roles;
+  }
+  return prismaClient.user.update({
+    data: data,
+    where: {
+      username: user.username,
+    },
+    select: {
+      username: true,
+      email: true,
+      roles: true,
+    },
+  });
+};
+
+const logout = async (username) => {
+  username = validation(getUserValidation, username);
+  const user = await prismaClient.user.findUnique({
+    where: {
+      username: username,
+    },
+    select: {
+      username: true,
+      token: true,
+    },
+  });
+  if (!user) {
+    throw new ResponseError("user is not found", 404);
+  }
+  return prismaClient.user.update({
+    data: {
+      token: null,
+    },
+    where: {
+      username: user.username,
+    },
+    select: {
+      username: true,
+    },
+  });
+};
+
+export default { register, login, getUser, update, logout };

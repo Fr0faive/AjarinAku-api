@@ -1,7 +1,8 @@
 import supertest from "supertest";
 import { web } from "../src/application/web";
 import { logger } from "../src/application/logging";
-import { createTestUser, removeTestUser } from "./test-utils";
+import { createTestUser, getTestUser, removeTestUser } from "./test-utils";
+import bcrypt from "bcrypt";
 
 describe("POST /api/users", function () {
   afterEach(async () => {
@@ -136,6 +137,114 @@ describe("GET /api/users/current", function () {
   it("should reject if token is wrong", async () => {
     const result = await supertest(web)
       .get("/api/users/current")
+      .set("Authorization", "salah");
+
+    expect(result.status).toBe(401);
+    expect(result.body.errors).toBeDefined();
+  });
+});
+
+describe("PATCH /api/users/current", function () {
+  beforeEach(async () => {
+    await createTestUser();
+  });
+
+  afterEach(async () => {
+    await removeTestUser();
+  });
+
+  it("should can update current user", async () => {
+    const result = await supertest(web)
+      .patch("/api/users/current")
+      .set("Authorization", "test")
+      .send({
+        password: "faikar",
+        email: "faikar@test.com",
+      });
+
+    expect(result.status).toBe(200);
+    expect(result.body.data.email).toBe("faikar@test.com");
+
+    const user = await getTestUser();
+    expect(user.email).toBe("faikar@test.com");
+    expect(await bcrypt.compare("faikar", user.password)).toBe(true);
+  });
+
+  it("should can update current user without password", async () => {
+    const result = await supertest(web)
+      .patch("/api/users/current")
+      .set("Authorization", "test")
+      .send({
+        email: "faikar@test.com",
+      });
+
+    expect(result.status).toBe(200);
+    expect(result.body.data.email).toBe("faikar@test.com");
+  });
+
+  it("should can update current user without email", async () => {
+    const result = await supertest(web)
+      .patch("/api/users/current")
+      .set("Authorization", "test")
+      .send({
+        password: "faikar",
+      });
+
+    expect(result.status).toBe(200);
+    const user = await getTestUser();
+    expect(await bcrypt.compare("faikar", user.password)).toBe(true);
+  });
+
+  it("should reject if invalid", async () => {
+    const result = await supertest(web)
+      .patch("/api/users/current")
+      .set("Authorization", "test")
+      .send({
+        password: "",
+        email: "",
+      });
+
+    expect(result.status).toBe(400);
+    expect(result.body.errors).toBeDefined();
+  });
+
+  it("should reject if token is wrong", async () => {
+    const result = await supertest(web)
+      .patch("/api/users/current")
+      .set("Authorization", "salah")
+      .send({
+        password: "faikar",
+        email: "faikar@test.com",
+      });
+
+    expect(result.status).toBe(401);
+    expect(result.body.errors).toBeDefined();
+  });
+});
+
+describe("DELETE /api/users/current", function () {
+  beforeEach(async () => {
+    await createTestUser();
+  });
+
+  afterEach(async () => {
+    await removeTestUser();
+  });
+  it("should can logout", async () => {
+    const result = await supertest(web)
+      .delete("/api/users/logout")
+      .set("Authorization", "test");
+
+    expect(result.status).toBe(200);
+    expect(result.body.data).toBe("OK");
+
+    const user = await getTestUser();
+    expect(user.token).toBe(null);
+  });
+
+  it("should reject if token is wrong", async () => {
+    const result = await supertest(web)
+      .delete("/api/users/logout")
       .set("Authorization", "salah");
 
     expect(result.status).toBe(401);

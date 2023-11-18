@@ -14,4 +14,16 @@ const loginUserValidation = Joi.object({
 
 const getUserValidation = Joi.string().max(100).required();
 
-export { registerUserValidation, loginUserValidation, getUserValidation };
+const updateUserValidation = Joi.object({
+  username: Joi.string().max(255).required(),
+  email: Joi.string().email().optional(),
+  password: Joi.string().optional(),
+  roles: Joi.string().valid("user", "admin").optional(),
+});
+
+export {
+  registerUserValidation,
+  loginUserValidation,
+  getUserValidation,
+  updateUserValidation,
+};
