@@ -28,4 +28,27 @@ const getTestUser = async () => {
   });
 };
 
-export { removeTestUser, createTestUser, getTestUser };
+const createTestArticle = async () => {
+  await prismaClient.article.create({
+    data: {
+      title: "test",
+      content: "test",
+      description: "test",
+      category: "test",
+      create_at: new Date(),
+      modified_at: new Date(),
+      author_id: 1,
+      token: "test",
+    },
+  });
+};
+
+const removeTestArticle = async () => {
+  await prismaClient.article.deleteMany({
+    where: {
+      title: "test",
+    },
+  });
+};
+
+export { removeTestUser, createTestUser, getTestUser, createTestArticle };
