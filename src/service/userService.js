@@ -29,6 +29,8 @@ const register = async (request) => {
   const createUser = await prismaClient.user.create({
     data: user,
     select: {
+      firstName: true,
+      lastName: true,
       username: true,
       email: true,
       roles: true,
@@ -42,7 +44,7 @@ const login = async (request) => {
 
   const user = await prismaClient.user.findUnique({
     where: {
-      username: "test",
+      username: loginRequest.username,
     },
     select: {
       username: true,
@@ -71,6 +73,8 @@ const login = async (request) => {
       username: user.username,
     },
     select: {
+      firstName: true,
+      lastName: true,
       token: true,
       username: true,
       email: true,
