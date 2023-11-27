@@ -12,6 +12,8 @@ const createTestUser = async () => {
   await prismaClient.user.create({
     data: {
       username: "test",
+      firstName: "john",
+      lastName: "doe",
       password: await bcrypt.hash("test", 10),
       email: "test@test.com",
       token: "test",
@@ -34,11 +36,8 @@ const createTestArticle = async () => {
       title: "test",
       content: "test",
       description: "test",
-      category: "test",
-      create_at: new Date(),
+      created_at: new Date(),
       modified_at: new Date(),
-      author_id: 1,
-      token: "test",
     },
   });
 };
@@ -51,4 +50,19 @@ const removeTestArticle = async () => {
   });
 };
 
-export { removeTestUser, createTestUser, getTestUser, createTestArticle };
+const removeTestCategory = async () => {
+  await prismaClient.category.deleteMany({
+    where: {
+      category_name: "test",
+    },
+  });
+};
+
+export {
+  removeTestUser,
+  createTestUser,
+  getTestUser,
+  createTestArticle,
+  removeTestArticle,
+  removeTestCategory,
+};

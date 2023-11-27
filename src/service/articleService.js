@@ -1,5 +1,6 @@
-import createArticleValidation from "../validation/articleValidation.js";
+import { createArticleValidation } from "../validation/articleValidation.js";
 import { validation } from "../validation/validation.js";
+import { prismaClient } from "../application/database.js";
 
 const create = async (request) => {
   const article = validation(createArticleValidation, request);
@@ -11,7 +12,6 @@ const create = async (request) => {
       title: true,
       content: true,
       description: true,
-      category: true,
     },
   });
   return createArticle;
