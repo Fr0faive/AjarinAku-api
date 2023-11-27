@@ -8,11 +8,11 @@ import {
 } from "./test-utils";
 
 describe("POST /api/categories", function () {
-  beforeEach(async () => {
+  beforeAll(async () => {
     createTestUser();
   });
 
-  afterEach(async () => {
+  afterAll(async () => {
     removeTestCategory();
     removeTestUser();
   });
@@ -21,6 +21,7 @@ describe("POST /api/categories", function () {
     const result = await supertest(web)
       .post("/api/categories")
       .set("Authorization", "test")
+      .set("Content-Type", "application/json")
       .send({
         category_name: "test",
       });

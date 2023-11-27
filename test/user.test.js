@@ -34,7 +34,7 @@ describe("POST /api/users", function () {
     });
 
     logger.info(result.body);
-
+    console.log(result.body.errors);
     expect(result.status).toBe(400);
     expect(result.body.errors).toBeDefined();
   });

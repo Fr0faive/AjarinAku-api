@@ -9,13 +9,9 @@ userRouter.use(authMiddleware);
 userRouter.get("/api/users/current", userController.getUser);
 userRouter.patch("/api/users/current", userController.update);
 userRouter.delete("/api/users/logout", userController.logout);
+// Article
+userRouter.post("/api/articles", articleController.create);
+// category
+userRouter.post("/api/categories", categoryService.create);
 
-const articleRouter = new express.Router();
-articleRouter.use(authMiddleware);
-articleRouter.post("/api/articles", articleController.create);
-
-const categoryRouter = new express.Router();
-categoryRouter.use(authMiddleware);
-categoryRouter.post("/api/categories", categoryService.create);
-
-export { userRouter, articleRouter, categoryRouter };
+export { userRouter };

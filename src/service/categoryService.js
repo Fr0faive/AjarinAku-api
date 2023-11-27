@@ -2,7 +2,7 @@ import { prismaClient } from "../application/database.js";
 import { categoryValidation } from "../validation/categoryValidation.js";
 import { validation } from "../validation/validation.js";
 
-const create = (request) => {
+const create = async (request) => {
   const category = validation(categoryValidation, request);
 
   const createCategory = prismaClient.category.create({
