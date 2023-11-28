@@ -46,4 +46,32 @@ const getAllCategory = async () => {
   return categories;
 };
 
-export default { create, getCategory, getAllCategory };
+const delCategory = async (categoryName) => {
+  await prismaClient.category.delete({
+    where: {
+      category_name: categoryName,
+    },
+  });
+};
+
+const updateCategory = async (request) => {
+  const category = validation(categoryValidation, request);
+  const updateCategory = prismaClient.category.update({
+    where: {
+      category_name: category.category_name,
+    },
+    data: category,
+    select: {
+      category_name: true,
+    },
+  });
+  return updateCategory;
+};
+
+export default {
+  create,
+  getCategory,
+  getAllCategory,
+  delCategory,
+  updateCategory,
+};

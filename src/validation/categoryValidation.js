@@ -6,4 +6,8 @@ const categoryValidation = Joi.object({
 
 const getCategoryValidation = Joi.string().max(255).required();
 
-export { categoryValidation, getCategoryValidation };
+const updateCategoryValidation = Joi.object({
+  category_name: Joi.string().max(255).required(),
+});
+
+export { categoryValidation, getCategoryValidation, updateCategoryValidation };

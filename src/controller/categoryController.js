@@ -34,4 +34,33 @@ const getAllCategory = async (req, res, next) => {
   }
 };
 
-export default { create, getCategory, getAllCategory };
+const delCategory = async (req, res, next) => {
+  try {
+    const categoryName = req.params.categoryName;
+    await categoryService.delCategory(categoryName);
+    res.status(200).json({
+      data: "OK",
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
+const updateCategory = async (req, res, next) => {
+  try {
+    const result = await categoryService.updateCategory(req.body);
+    res.status(200).json({
+      data: result,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
+export default {
+  create,
+  getCategory,
+  getAllCategory,
+  delCategory,
+  updateCategory,
+};

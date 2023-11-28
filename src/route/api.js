@@ -18,5 +18,14 @@ userRouter.get(
   categoryController.getCategory
 );
 userRouter.get("/api/categories/all", categoryController.getAllCategory);
+userRouter.delete(
+  "/api/categories/:categoryName",
+  categoryController.delCategory
+);
+
+userRouter.patch(
+  "/api/categories/:categoryName",
+  categoryController.updateCategory
+);
 
 export { userRouter };
