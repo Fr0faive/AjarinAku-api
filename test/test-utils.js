@@ -50,6 +50,14 @@ const removeTestArticle = async () => {
   });
 };
 
+const createTestCategory = async () => {
+  await prismaClient.category.create({
+    data: {
+      category_name: "test",
+    },
+  });
+};
+
 const removeTestCategory = async () => {
   await prismaClient.category.deleteMany({
     where: {
@@ -65,4 +73,5 @@ export {
   createTestArticle,
   removeTestArticle,
   removeTestCategory,
+  createTestCategory,
 };

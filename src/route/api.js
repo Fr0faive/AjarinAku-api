@@ -13,5 +13,7 @@ userRouter.delete("/api/users/logout", userController.logout);
 userRouter.post("/api/articles", articleController.create);
 // category
 userRouter.post("/api/categories", categoryController.create);
+userRouter.get("/api/categories/:categoryName", categoryController.getCategory);
+userRouter.get("/api/categories", categoryController.getAllCategory);
 
 export { userRouter };

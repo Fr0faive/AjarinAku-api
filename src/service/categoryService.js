@@ -1,5 +1,9 @@
 import { prismaClient } from "../application/database.js";
-import { categoryValidation } from "../validation/categoryValidation.js";
+import { ResponseError } from "../error/responseError.js";
+import {
+  categoryValidation,
+  getCategoryValidation,
+} from "../validation/categoryValidation.js";
 import { validation } from "../validation/validation.js";
 
 const create = async (request) => {
@@ -14,4 +18,32 @@ const create = async (request) => {
   return createCategory;
 };
 
-export default { create };
+const getCategory = async (categoryName) => {
+  categoryName = validation(getCategoryValidation, categoryName);
+
+  const category = await prismaClient.category.findUnique({
+    where: {
+      category_name: categoryName,
+    },
+    select: {
+      category_name: true,
+    },
+  });
+
+  if (!category) {
+    throw new ResponseError("Category is not found", 404);
+  }
+
+  return category;
+};
+
+const getAllCategory = async () => {
+  const categories = await prismaClient.category.findMany({
+    select: {
+      category_name: true,
+    },
+  });
+  return categories;
+};
+
+export default { create, getCategory, getAllCategory };
