@@ -3,14 +3,18 @@ import userController from "../controller/userController.js";
 import { authMiddleware } from "../middleware/auth-middleware.js";
 import articleController from "../controller/articleController.js";
 import categoryController from "../controller/categoryController.js";
+import { upload } from "../middleware/multer-middleware.js";
 
 const userRouter = new express.Router();
 userRouter.use(authMiddleware);
 userRouter.get("/api/users/current", userController.getUser);
 userRouter.patch("/api/users/current", userController.update);
 userRouter.delete("/api/users/logout", userController.logout);
+
 // Article
+userRouter.use(upload.single("image"));
 userRouter.post("/api/articles", articleController.create);
+
 // category
 userRouter.post("/api/categories", categoryController.create);
 userRouter.get(

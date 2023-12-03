@@ -38,6 +38,7 @@ model Article {
   title String @db.VarChar(255)
   content String @db.Text
   description String @db.Text
+  image String @db.Text
   created_at DateTime @default(now())
   modified_at DateTime @default(now())
   userId Int

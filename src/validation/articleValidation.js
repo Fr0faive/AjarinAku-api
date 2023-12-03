@@ -6,6 +6,7 @@ const createArticleValidation = Joi.object({
   description: Joi.string().max(255).required(),
   created_at: Joi.date().optional(),
   modified_at: Joi.date().optional(),
+  image: Joi.string().max(255).optional(),
   categoryId: Joi.number().required(),
   userId: Joi.number().required(),
 });
@@ -16,6 +17,7 @@ const updateArticleValidation = Joi.object({
   description: Joi.string().max(255).optional(),
   created_at: Joi.date().optional(),
   modified_at: Joi.date().optional(),
+  Image: Joi.string().max(255).optional(),
   categoryId: Joi.number().optional(),
   userId: Joi.number().optional(),
 });

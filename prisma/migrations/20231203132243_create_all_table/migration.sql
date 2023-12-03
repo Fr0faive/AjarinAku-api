@@ -19,6 +19,7 @@ CREATE TABLE `category` (
     `category_id` INTEGER NOT NULL AUTO_INCREMENT,
     `category_name` VARCHAR(255) NOT NULL,
 
+    UNIQUE INDEX `category_category_name_key`(`category_name`),
     PRIMARY KEY (`category_id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE InnoDB;
 
@@ -28,13 +29,14 @@ CREATE TABLE `article` (
     `title` VARCHAR(255) NOT NULL,
     `content` TEXT NOT NULL,
     `description` TEXT NOT NULL,
+    `image` TEXT NOT NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `modified_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `userId` INTEGER NOT NULL,
     `categoryId` INTEGER NOT NULL,
 
     PRIMARY KEY (`article_id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE InnoDB;
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE InnoDB; 
 
 -- CreateTable
 CREATE TABLE `notification` (
