@@ -22,9 +22,9 @@ const updateArticleValidation = Joi.object({
   userId: Joi.number().optional(),
 });
 
-const getArticleValidation = Joi.string().max(255).required();
+const getArticleValidation = Joi.number().required();
 
-const deleteArticleValidation = Joi.string().max(255).required();
+const deleteArticleValidation = Joi.number().required();
 
 export {
   createArticleValidation,

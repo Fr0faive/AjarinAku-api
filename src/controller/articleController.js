@@ -31,6 +31,48 @@ const create = async (req, res, next) => {
   }
 };
 
+const update = async (req, res, next) => {
+  try {
+    const {
+      title,
+      content,
+      description,
+      created_at,
+      modified_at,
+      categoryId,
+      userId,
+    } = req.body;
+    const { article_id } = req.params;
+    const articleData = {
+      title,
+      content,
+      description,
+      created_at,
+      modified_at,
+      categoryId,
+      userId,
+    };
+    const result = await articleService.update(article_id, articleData);
+    res.status(200).json({
+      data: result,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
+const delArticle = async (req, res, next) => {
+  try {
+    const { article_id } = req.params;
+    const result = await articleService.delArticle(article_id);
+    res.status(200).json({
+      data: result,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
 const getArticle = async (req, res, next) => {
   try {
     const { article_id } = req.params;
@@ -54,4 +96,4 @@ const getAllArticle = async (req, res, next) => {
   }
 };
 
-export default { create, getArticle, getAllArticle };
+export default { create, getArticle, getAllArticle, update, delArticle };

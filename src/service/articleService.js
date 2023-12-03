@@ -11,10 +11,45 @@ const create = async (request) => {
       article_id: true,
       title: true,
       description: true,
-      Image: true,
+      image: true,
     },
   });
   return createArticle;
+};
+
+const update = async (request) => {
+  const article = validation(createArticleValidation, request);
+
+  const updateArticle = await prismaClient.article.update({
+    where: {
+      article_id: article.article_id,
+    },
+    data: article,
+    select: {
+      article_id: true,
+      title: true,
+      description: true,
+      image: true,
+    },
+  });
+  return updateArticle;
+};
+
+const delArticle = async (request) => {
+  const article = validation(createArticleValidation, request);
+
+  const deleteArticle = await prismaClient.article.delete({
+    where: {
+      article_id: article.article_id,
+    },
+    select: {
+      article_id: true,
+      title: true,
+      description: true,
+      image: true,
+    },
+  });
+  return deleteArticle;
 };
 
 const getArticle = async (request) => {
@@ -55,4 +90,4 @@ const getAllArticle = async () => {
   return getAllArticle;
 };
 
-export default { create, getArticle, getAllArticle };
+export default { create, getArticle, getAllArticle, update, delArticle };
