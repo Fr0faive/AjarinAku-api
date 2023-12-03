@@ -26,6 +26,7 @@ const getCategory = async (categoryName) => {
       category_name: categoryName,
     },
     select: {
+      category_id: true,
       category_name: true,
     },
   });
@@ -40,6 +41,7 @@ const getCategory = async (categoryName) => {
 const getAllCategory = async () => {
   const categories = await prismaClient.category.findMany({
     select: {
+      category_id: true,
       category_name: true,
     },
   });

@@ -8,7 +8,6 @@ const create = async (req, res, next) => {
       description,
       created_at,
       modified_at,
-      Image,
       categoryId,
       userId,
     } = req.body;
@@ -19,7 +18,7 @@ const create = async (req, res, next) => {
       description,
       created_at,
       modified_at,
-      Image: path,
+      image: path,
       categoryId,
       userId,
     };

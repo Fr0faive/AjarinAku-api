@@ -6,7 +6,7 @@ const publicRouter = new express.Router();
 publicRouter.post("/api/users", userController.register);
 publicRouter.post("/api/users/login", userController.login);
 
-publicRouter.use("/images", express.static("uploads"));
+publicRouter.use("/images", express.static("images"));
 publicRouter.get("/api/articles", articleController.getAllArticle);
 publicRouter.get("/api/articles/:id", articleController.getArticle);
 
