@@ -15,7 +15,7 @@ userRouter.delete("/api/users/logout", userController.logout);
 userRouter.use(upload.single("image"));
 userRouter.post("/api/articles", articleController.create);
 userRouter.delete("/api/articles/:id", articleController.delArticle);
-userRouter.patch("/api/articles/:id", articleController.updateArticle);
+userRouter.patch("/api/articles/:id", articleController.update);
 
 // category
 userRouter.post("/api/categories", categoryController.create);
