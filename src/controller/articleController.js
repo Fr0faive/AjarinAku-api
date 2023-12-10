@@ -11,14 +11,15 @@ const create = async (req, res, next) => {
       categoryId,
       userId,
     } = req.body;
-    const { path } = req.file;
+    const imagePath =
+      "https://" + req.get("host") + "/" + req.file.path.replace("\\", "/");
     const articleData = {
       title,
       content,
       description,
       created_at,
       modified_at,
-      image: path,
+      image: imagePath,
       categoryId,
       userId,
     };
