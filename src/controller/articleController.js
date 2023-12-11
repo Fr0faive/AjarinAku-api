@@ -2,23 +2,13 @@ import articleService from "../service/articleService.js";
 
 const create = async (req, res, next) => {
   try {
-    const {
-      title,
-      content,
-      description,
-      created_at,
-      modified_at,
-      category_id,
-      user_id,
-    } = req.body;
+    const { title, content, description, category_id, user_id } = req.body;
     const imagePath =
       "https://" + req.get("host") + "/" + req.file.path.replace("\\", "/");
     const articleData = {
       title,
       content,
       description,
-      created_at,
-      modified_at,
       image: imagePath,
       categoryId: category_id,
       userId: user_id,
