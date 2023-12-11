@@ -5,6 +5,7 @@ import {
   registerUserValidation,
   getUserValidation,
   updateUserValidation,
+  getUserByIdValidation,
 } from "../validation/userValidation.js";
 // import validation from "../validation/validation.js";
 import bcrypt from "bcrypt";
