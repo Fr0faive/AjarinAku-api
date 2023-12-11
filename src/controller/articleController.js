@@ -8,8 +8,8 @@ const create = async (req, res, next) => {
       description,
       created_at,
       modified_at,
-      categoryId,
-      userId,
+      category_id,
+      user_id,
     } = req.body;
     const imagePath =
       "https://" + req.get("host") + "/" + req.file.path.replace("\\", "/");
@@ -20,8 +20,8 @@ const create = async (req, res, next) => {
       created_at,
       modified_at,
       image: imagePath,
-      categoryId,
-      userId,
+      categoryId: category_id,
+      userId: user_id,
     };
     const result = await articleService.create(articleData);
     res.status(200).json({
