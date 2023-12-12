@@ -66,7 +66,7 @@ const delArticle = async (req, res, next) => {
 
 const getArticle = async (req, res, next) => {
   try {
-    const { article_id } = req.params;
+    const article_id = req.params.id;
     const result = await articleService.getArticle(article_id);
     res.status(200).json({
       data: result,

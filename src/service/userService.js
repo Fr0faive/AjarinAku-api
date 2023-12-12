@@ -108,6 +108,20 @@ const getUser = async (username) => {
   return user;
 };
 
+const getAllUser = async () => {
+  const users = await prismaClient.user.findMany({
+    select: {
+      user_id: true,
+      firstName: true,
+      lastName: true,
+      username: true,
+      email: true,
+      roles: true,
+    },
+  });
+  return users;
+};
+
 const getUserById = async (user_id) => {
   user_id = validation(getUserByIdValidation, user_id);
 
@@ -193,4 +207,12 @@ const logout = async (username) => {
   });
 };
 
-export default { register, login, getUser, update, logout, getUserById };
+export default {
+  register,
+  login,
+  getUser,
+  update,
+  logout,
+  getUserById,
+  getAllUser,
+};

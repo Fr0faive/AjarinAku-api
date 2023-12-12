@@ -34,6 +34,17 @@ const getUser = async (req, res, next) => {
   }
 };
 
+const getAllUser = async (req, res, next) => {
+  try {
+    const result = await userService.getAllUser();
+    res.status(200).json({
+      data: result,
+    });
+  } catch (e) {
+    next(e);
+  }
+};
+
 const getUserById = async (req, res, next) => {
   try {
     const user_id = req.params.id;
@@ -78,4 +89,5 @@ export default {
   update,
   logout,
   getUserById,
+  getAllUser,
 };

@@ -1,4 +1,7 @@
-import { createArticleValidation } from "../validation/articleValidation.js";
+import {
+  createArticleValidation,
+  getArticleValidation,
+} from "../validation/articleValidation.js";
 import { validation } from "../validation/validation.js";
 import { prismaClient } from "../application/database.js";
 
@@ -52,11 +55,11 @@ const delArticle = async (request) => {
   return deleteArticle;
 };
 
-const getArticle = async (request) => {
-  const article = validation(getArticleValidation, request);
+const getArticle = async (article_id) => {
+  article_id = validation(getArticleValidation, article_id);
   const getArticle = await prismaClient.article.findUnique({
     where: {
-      article_id: article.article_id,
+      article_id: article_id,
     },
     select: {
       article_id: true,
