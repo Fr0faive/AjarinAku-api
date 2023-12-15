@@ -44,6 +44,9 @@ const getAllCategory = async () => {
       category_id: true,
       category_name: true,
     },
+    orderBy: {
+      category_id: "asc",
+    },
   });
   return categories;
 };

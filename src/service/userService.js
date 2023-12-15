@@ -123,11 +123,9 @@ const getAllUser = async () => {
 };
 
 const getUserById = async (user_id) => {
-  user_id = validation(getUserByIdValidation, user_id);
-
   const user = await prismaClient.user.findUnique({
     where: {
-      user_id: user_id,
+      user_id,
     },
     select: {
       user_id: true,
@@ -142,6 +140,7 @@ const getUserById = async (user_id) => {
   if (!user) {
     throw new ResponseError("user is not found", 404);
   }
+  return user;
 };
 
 const update = async (request) => {

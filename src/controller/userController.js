@@ -48,7 +48,7 @@ const getAllUser = async (req, res, next) => {
 const getUserById = async (req, res, next) => {
   try {
     const user_id = req.params.id;
-    const result = await userService.getUserById(user_id);
+    const result = await userService.getUserById(parseInt(user_id));
     res.status(200).json({
       data: result,
     });
