@@ -1,6 +1,7 @@
 import {
   createArticleValidation,
   getArticleValidation,
+  updateArticleValidation,
 } from "../validation/articleValidation.js";
 import { validation } from "../validation/validation.js";
 import { prismaClient } from "../application/database.js";
@@ -21,13 +22,18 @@ const create = async (request) => {
 };
 
 const update = async (request) => {
-  const article = validation(createArticleValidation, request);
+  const article = validation(updateArticleValidation, request);
+  console.log(article);
 
   const updateArticle = await prismaClient.article.update({
     where: {
       article_id: article.article_id,
     },
-    data: article,
+    data: {
+      title: article.title,
+      description: article.description,
+      content: article.content,
+    },
     select: {
       article_id: true,
       title: true,
@@ -38,18 +44,10 @@ const update = async (request) => {
   return updateArticle;
 };
 
-const delArticle = async (request) => {
-  const article = validation(createArticleValidation, request);
-
+const delArticle = async (id) => {
   const deleteArticle = await prismaClient.article.delete({
     where: {
-      article_id: article.article_id,
-    },
-    select: {
-      article_id: true,
-      title: true,
-      description: true,
-      image: true,
+      article_id: id,
     },
   });
   return deleteArticle;

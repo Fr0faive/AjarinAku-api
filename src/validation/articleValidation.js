@@ -12,12 +12,13 @@ const createArticleValidation = Joi.object({
 });
 
 const updateArticleValidation = Joi.object({
+  article_id: Joi.number().positive().required(),
   title: Joi.string().max(255).optional(),
   content: Joi.string().max(255).optional(),
   description: Joi.string().max(255).optional(),
   created_at: Joi.date().optional(),
   modified_at: Joi.date().optional(),
-  Image: Joi.string().max(255).optional(),
+  image: Joi.string().max(255).optional(),
   categoryId: Joi.number().optional(),
   userId: Joi.number().optional(),
 });

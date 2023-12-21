@@ -24,6 +24,7 @@ const create = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
+    const id = parseInt(req.params.id);
     const {
       title,
       content,
@@ -33,8 +34,8 @@ const update = async (req, res, next) => {
       categoryId,
       userId,
     } = req.body;
-    const { article_id } = req.params;
     const articleData = {
+      article_id: id,
       title,
       content,
       description,
@@ -43,7 +44,7 @@ const update = async (req, res, next) => {
       categoryId,
       userId,
     };
-    const result = await articleService.update(article_id, articleData);
+    const result = await articleService.update(articleData);
     res.status(200).json({
       data: result,
     });
@@ -54,8 +55,8 @@ const update = async (req, res, next) => {
 
 const delArticle = async (req, res, next) => {
   try {
-    const { article_id } = req.params;
-    const result = await articleService.delArticle(article_id);
+    const id = req.params.id;
+    const result = await articleService.delArticle(parseInt(id));
     res.status(200).json({
       data: result,
     });
